@@ -1,11 +1,16 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MelodyLink;
+using MelodyLink.Models;
 
 var host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices(services =>
+    .ConfigureServices((context, services) =>
     {
-        services.AddTransient<Application>();
+        services.Configure<LocalStorageSettings>(
+            context.Configuration.GetSection("LocalStorageSettings")
+        );
+
+        services.AddScoped<Application>();
     })
     .Build();
 

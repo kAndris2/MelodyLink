@@ -1,7 +1,14 @@
-﻿namespace MelodyLink
+﻿using MelodyLink.Models;
+using Microsoft.Extensions.Options;
+
+namespace MelodyLink
 {
-    class Application
+    public class Application
     {
+        public Application()
+        {
+        }
+
         public async Task Run()
         {
         }
