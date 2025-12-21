@@ -2,13 +2,16 @@
 using Microsoft.Extensions.Hosting;
 using MelodyLink;
 using MelodyLink.Models;
+using MelodyLink.Services;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
         Configure<LocalStorageSettings>(services, context);
+        Configure<SyncSettings>(services, context);
 
         services.AddScoped<Application>();
+        services.AddScoped<LocalMusicService>();
     })
     .Build();
 
