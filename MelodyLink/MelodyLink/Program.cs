@@ -10,8 +10,8 @@ var host = Host.CreateDefaultBuilder(args)
         Configure<LocalStorageSettings>(services, context);
         Configure<SyncSettings>(services, context);
 
-        services.AddScoped<Application>();
-        services.AddScoped<LocalMusicService>();
+        services.AddTransient<Application>();
+        services.AddTransient<LocalMusicService>();
     })
     .Build();
 
