@@ -20,9 +20,22 @@ namespace MelodyLink.Services
                 throw new ArgumentException($"The filepath does not exist! ({_config.FilePath})");
             }
 
-            return Directory.GetFiles(_config.FilePath)
-                .Where(file => _config.Extensions.Contains(Path.GetExtension(file)))
+            var files = Directory.GetFiles(_config.FilePath);
+
+            if (files == null || files.Length == 0)
+            {
+                throw new ArgumentException($"There are no files on the configred path! ({_config.FilePath})");
+            }
+
+            var relevantFiles = files.Where(file => _config.Extensions.Contains(Path.GetExtension(file)))
                 .Select(Path.GetFileNameWithoutExtension);
+
+            if (!relevantFiles.Any())
+            {
+                throw new ArgumentException($"There were no relevant files on the configred path! ({_config.FilePath})");
+            }
+
+            return relevantFiles;
         }
     }
 }
