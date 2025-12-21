@@ -1,7 +1,4 @@
-﻿using MelodyLink.Models;
-using Microsoft.Extensions.Options;
-
-namespace MelodyLink
+﻿namespace MelodyLink
 {
     public class Application
     {

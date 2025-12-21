@@ -6,9 +6,7 @@ using MelodyLink.Models;
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
-        services.Configure<LocalStorageSettings>(
-            context.Configuration.GetSection("LocalStorageSettings")
-        );
+        Configure<LocalStorageSettings>(services, context);
 
         services.AddScoped<Application>();
     })
@@ -16,3 +14,11 @@ var host = Host.CreateDefaultBuilder(args)
 
 var app = host.Services.GetRequiredService<Application>();
 app.Run();
+
+static void Configure<T>(IServiceCollection services, HostBuilderContext context) 
+    where T : class, new()
+{
+    services.Configure<T>(
+        context.Configuration.GetSection(typeof(T).Name)
+    );
+}
