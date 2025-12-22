@@ -8,7 +8,7 @@
         {
             get
             {
-                return string.Join(", ", Artists) + Title;
+                return string.Join(", ", Artists) + " - " + Title;
             }
         }
 
