@@ -9,9 +9,14 @@ var host = Host.CreateDefaultBuilder(args)
     {
         Configure<LocalStorageSettings>(services, context);
         Configure<SyncSettings>(services, context);
+        Configure<SpotifySettings>(services, context);
 
         services.AddTransient<Application>();
         services.AddTransient<LocalMusicService>();
+        services.AddTransient<SpotifyService>();
+        services.AddTransient<SpotifyConnector>();
+        services.AddTransient<SpotifyApiService>();
+        services.AddTransient<SyncronousCommandRunner>();
     })
     .Build();
 

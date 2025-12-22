@@ -29,6 +29,7 @@ namespace MelodyLink
             return flow switch
             {
                 Flow.PC => _serviceProvider.GetRequiredService<LocalMusicService>(),
+                Flow.Spotify => _serviceProvider.GetRequiredService<SpotifyService>(),
                 _ => throw new ArgumentException($"Unknown flow! ({flow})")
             };
         }
