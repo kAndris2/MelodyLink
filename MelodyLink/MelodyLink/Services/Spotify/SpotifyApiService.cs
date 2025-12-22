@@ -1,6 +1,6 @@
 ﻿using SpotifyAPI.Web;
 
-namespace MelodyLink.Services
+namespace MelodyLink.Services.Spotify
 {
     public class SpotifyApiService
     {

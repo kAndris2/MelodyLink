@@ -1,6 +1,6 @@
 ﻿using MelodyLink.Interfaces;
 
-namespace MelodyLink.Services
+namespace MelodyLink.Services.Spotify
 {
     public class SpotifyService : IFlowService
     {

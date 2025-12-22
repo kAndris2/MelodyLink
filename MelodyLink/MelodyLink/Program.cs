@@ -3,6 +3,8 @@ using Microsoft.Extensions.Hosting;
 using MelodyLink;
 using MelodyLink.Models;
 using MelodyLink.Services;
+using MelodyLink.Services.Spotify;
+using MelodyLink.Services.Local;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>

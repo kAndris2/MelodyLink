@@ -3,7 +3,7 @@ using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web;
 using MelodyLink.Models;
 
-namespace MelodyLink.Services
+namespace MelodyLink.Services.Spotify
 {
     public class SpotifyConnector
     {

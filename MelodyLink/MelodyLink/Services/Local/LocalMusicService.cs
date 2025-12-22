@@ -2,7 +2,7 @@
 using MelodyLink.Models;
 using MelodyLink.Interfaces;
 
-namespace MelodyLink.Services
+namespace MelodyLink.Services.Local
 {
     public class LocalMusicService : IFlowService
     {
