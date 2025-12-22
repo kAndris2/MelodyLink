@@ -14,7 +14,7 @@ namespace MelodyLink.Services.Spotify
             _client = runner.Run(() => connector.Connect());
         }
 
-        public List<string> GetPlaylistTracks()
+        public Dictionary<string, List<SpotifyMusicTrack>> GetPlaylistTracks()
         {
             var playlistTracks = new Dictionary<string, List<SpotifyMusicTrack>>();
             var playlists = GetPlaylists();
@@ -26,9 +26,7 @@ namespace MelodyLink.Services.Spotify
                 playlistTracks.Add(playlist.Name, musicTracks);
             }
 
-            return [.. playlistTracks.Values
-                .SelectMany(tracks => tracks)
-                .Select(track => track.FullName)];
+            return playlistTracks;
         }
 
         private List<FullTrack> GetFullTracks(string playlistId)
