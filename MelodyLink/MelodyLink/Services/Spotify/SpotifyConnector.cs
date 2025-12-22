@@ -31,6 +31,7 @@ namespace MelodyLink.Services.Spotify
                 [
                     Scopes.PlaylistReadPrivate,
                     Scopes.PlaylistModifyPublic,
+                    Scopes.PlaylistReadCollaborative,
                     Scopes.PlaylistModifyPrivate,
                     Scopes.PlaylistModifyPublic,
                     Scopes.UserLibraryModify,

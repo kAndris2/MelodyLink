@@ -13,7 +13,7 @@ namespace MelodyLink.Services.Spotify
 
         public async Task<IEnumerable<string>> GetMusicTitles()
         {
-            throw new NotImplementedException();
+            return _spotify.GetPlaylistTracks();
         }
     }
 }
