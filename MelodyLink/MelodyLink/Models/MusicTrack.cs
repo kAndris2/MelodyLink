@@ -1,9 +1,20 @@
-﻿namespace MelodyLink.Models
+﻿using System.Text.RegularExpressions;
+
+namespace MelodyLink.Models
 {
     public class MusicTrack
     {
-        public string Title { get; private set; }
+        private readonly string title;
+        public string Title 
+        { 
+            get
+            {
+                return Regex.Replace(title, @"\s*\([^)]*\)\s*$", "");
+            }
+        }
+
         public string[] Artists { get; protected set; }
+
         public string FullName
         {
             get
@@ -14,12 +25,12 @@
 
         public MusicTrack(string title)
         {
-            Title = title;
+            this.title = title;
         }
 
         public MusicTrack(string title, string[] artists)
         {
-            Title = title;
+            this.title = title;
             Artists = artists;
         }
     }
