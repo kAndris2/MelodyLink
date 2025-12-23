@@ -9,7 +9,7 @@ namespace MelodyLink.Services.Spotify
 
         public SpotifyApiService(SpotifyConnector connector)
         {
-            connector.Connect()
+            _client = connector.Connect()
                 .GetAwaiter()
                 .GetResult();
         }
