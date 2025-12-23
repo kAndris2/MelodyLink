@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web;
 using MelodyLink.Models;
@@ -7,17 +8,21 @@ namespace MelodyLink.Services.Spotify
 {
     public class SpotifyConnector
     {
+        private readonly ILogger<SpotifyConnector> _logger;
         private readonly TaskCompletionSource<SpotifyClient> _clientSource = new();
         private readonly SpotifySettings _config;
         private EmbedIOAuthServer _server;
 
-        public SpotifyConnector(IOptions<SpotifySettings> config)
+        public SpotifyConnector(IOptions<SpotifySettings> config, ILogger<SpotifyConnector> logger)
         {
             _config = config.Value;
+            _logger = logger;
         }
 
         public async Task<SpotifyClient> Connect()
         {
+            _logger.LogInformation("The application is about to connect to Spotify...");
+
             var uri = new Uri(_config.RedirectUrl);
             _server = new EmbedIOAuthServer(uri, uri.Port);
             await _server.Start();
@@ -55,13 +60,15 @@ namespace MelodyLink.Services.Spotify
               )
             );
 
+            _logger.LogInformation("The authorization was successful!");
+
             var spotify = new SpotifyClient(tokenResponse.AccessToken);
             _clientSource.TrySetResult(spotify);
         }
 
         private async Task OnErrorReceived(object sender, string error, string state)
         {
-            Console.WriteLine($"Aborting authorization, error received: {error}");
+            _logger.LogError($"Aborting authorization! Ex.: {error}");
             await _server.Stop();
         }
     }
