@@ -24,6 +24,8 @@ namespace MelodyLink
 
         public async Task Run()
         {
+            _logger.LogInformation($"The application is starting in mode: {_config.Source} to {_config.Target}");
+
             var sourceFlowService = GetFlowService(_config.Source);
             var musicTitles = await sourceFlowService.GetMusicTitles();
 
