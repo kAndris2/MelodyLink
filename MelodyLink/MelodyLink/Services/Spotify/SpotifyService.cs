@@ -31,7 +31,7 @@ namespace MelodyLink.Services.Spotify
             }
             catch (Exception ex)
             {
-                _logger.LogError($"An error occurred while trying to get playlists/tracks on Spotify! Ex.: {ex.Message}");
+                _logger.LogError($"An error occurred while trying to get playlists/tracks from Spotify! Ex.: {ex.Message}");
                 return null;
             }
         }
