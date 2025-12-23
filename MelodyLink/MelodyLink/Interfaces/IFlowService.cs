@@ -2,6 +2,6 @@
 {
     public interface IFlowService
     {
-        Task<IEnumerable<string>> GetMusicTitles();
+        Task<IEnumerable<string>?> GetMusicTitles();
     }
 }

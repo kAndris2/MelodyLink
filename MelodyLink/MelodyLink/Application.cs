@@ -27,6 +27,8 @@ namespace MelodyLink
             var sourceFlowService = GetFlowService(_config.Source);
             var musicTitles = await sourceFlowService.GetMusicTitles();
 
+            if (musicTitles == null) return;
+
             _logger.LogInformation($"Found {musicTitles.Count()} track(s) on the source.");
         }
 
