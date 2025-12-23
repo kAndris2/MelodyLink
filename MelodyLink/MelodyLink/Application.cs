@@ -3,7 +3,8 @@ using Microsoft.Extensions.Options;
 using MelodyLink.Enums;
 using MelodyLink.Interfaces;
 using MelodyLink.Models;
-using MelodyLink.Services;
+using MelodyLink.Services.Spotify;
+using MelodyLink.Services.Local;
 
 namespace MelodyLink
 {
@@ -29,6 +30,7 @@ namespace MelodyLink
             return flow switch
             {
                 Flow.PC => _serviceProvider.GetRequiredService<LocalMusicService>(),
+                Flow.Spotify => _serviceProvider.GetRequiredService<SpotifyService>(),
                 _ => throw new ArgumentException($"Unknown flow! ({flow})")
             };
         }

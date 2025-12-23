@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
-using MelodyLink.Models;
 using MelodyLink.Interfaces;
+using MelodyLink.Models;
 
-namespace MelodyLink.Services
+namespace MelodyLink.Services.Local
 {
     public class LocalMusicService : IFlowService
     {
@@ -13,7 +13,7 @@ namespace MelodyLink.Services
             _config = config.Value;
         }
 
-        async Task<IEnumerable<string>> IFlowService.GetMusicTitles()
+        public async Task<IEnumerable<string>> GetMusicTitles()
         {
             if (!Directory.Exists(_config.FilePath))
             {
