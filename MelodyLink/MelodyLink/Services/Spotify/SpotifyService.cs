@@ -13,7 +13,7 @@ namespace MelodyLink.Services.Spotify
 
         public async Task<IEnumerable<string>> GetMusicTitles()
         {
-            var playlistTracks = _spotify.GetPlaylistTracks();
+            var playlistTracks = await _spotify.GetPlaylistTracks();
 
             return [.. playlistTracks.Values
                 .SelectMany(tracks => tracks)

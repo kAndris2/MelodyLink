@@ -6,22 +6,22 @@ namespace MelodyLink.Services.Spotify
     public class SpotifyApiService
     {
         private readonly SpotifyClient _client;
-        private readonly SyncronousCommandRunner _runner;
 
-        public SpotifyApiService(SpotifyConnector connector, SyncronousCommandRunner runner)
+        public SpotifyApiService(SpotifyConnector connector)
         {
-            _runner = runner;
-            _client = runner.Run(() => connector.Connect());
+            connector.Connect()
+                .GetAwaiter()
+                .GetResult();
         }
 
-        public Dictionary<string, List<SpotifyMusicTrack>> GetPlaylistTracks()
+        public async Task<Dictionary<string, List<SpotifyMusicTrack>>> GetPlaylistTracks()
         {
             var playlistTracks = new Dictionary<string, List<SpotifyMusicTrack>>();
-            var playlists = GetPlaylists();
+            var playlists = await GetPlaylists();
 
             foreach (var playlist in playlists)
             {
-                var fullTracks = GetFullTracks(playlist.Id);
+                var fullTracks = await GetFullTracks(playlist.Id);
                 var musicTracks = fullTracks.Select(track => new SpotifyMusicTrack(track.Name, [.. track.Artists.Select(artist => artist.Name)])).ToList();
                 playlistTracks.Add(playlist.Name, musicTracks);
             }
@@ -29,16 +29,16 @@ namespace MelodyLink.Services.Spotify
             return playlistTracks;
         }
 
-        private List<FullTrack> GetFullTracks(string playlistId)
+        private async Task<List<FullTrack>> GetFullTracks(string playlistId)
         {
             var tracks = new List<FullTrack>();
-            var page = _runner.Run(() => _client.Playlists.GetItems(playlistId));
+            var page = await _client.Playlists.GetItems(playlistId);
 
             AddTracks(page, tracks);
 
             while (page.Next != null)
             {
-                page = _runner.Run(() => _client.NextPage(page));
+                page = await _client.NextPage(page);
                 AddTracks(page, tracks);
             }
 
@@ -56,17 +56,17 @@ namespace MelodyLink.Services.Spotify
             }
         }
 
-        private List<FullPlaylist> GetPlaylists()
+        private async Task<List<FullPlaylist>> GetPlaylists()
         {
             var playlist = new List<FullPlaylist>();
-            var page = _runner.Run(() => _client.Playlists.CurrentUsers());
+            var page = await _client.Playlists.CurrentUsers();
 
             do
             {
                 try
                 {
                     playlist.AddRange(page.Items);
-                    page = _runner.Run(() => _client.NextPage(page));
+                    page = await _client.NextPage(page);
                 }
                 catch
                 {

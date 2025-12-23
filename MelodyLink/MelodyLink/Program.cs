@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Hosting;
 using MelodyLink;
 using MelodyLink.Models;
-using MelodyLink.Services;
 using MelodyLink.Services.Spotify;
 using MelodyLink.Services.Local;
 
@@ -18,12 +17,13 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<SpotifyService>();
         services.AddTransient<SpotifyConnector>();
         services.AddTransient<SpotifyApiService>();
-        services.AddTransient<SyncronousCommandRunner>();
     })
     .Build();
 
 var app = host.Services.GetRequiredService<Application>();
-app.Run();
+app.Run()
+    .GetAwaiter()
+    .GetResult();
 
 static void Configure<T>(IServiceCollection services, HostBuilderContext context) 
     where T : class, new()
