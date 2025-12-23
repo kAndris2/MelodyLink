@@ -30,9 +30,6 @@ try
         })
         .Build();
 
-    var logger = host.Services.GetRequiredService<ILogger<Program>>();
-    logger.LogInformation("Application starting");
-
     var app = host.Services.GetRequiredService<Application>();
     app.Run()
         .GetAwaiter()
@@ -41,7 +38,7 @@ try
 catch (Exception ex)
 {
     LogManager.GetCurrentClassLogger()
-        .Error(ex, "Unhandled exception");
+        .Error($"Unhandled exception! Ex.: {ex.Message}");
 }
 finally
 {
