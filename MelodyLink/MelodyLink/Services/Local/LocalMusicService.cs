@@ -9,38 +9,39 @@ namespace MelodyLink.Services.Local
     {
         private readonly LocalStorageSettings _config;
         private readonly ILogger<LocalMusicService> _logger;
+        private readonly MetaDataHandler _metaHandler;
 
-        public LocalMusicService(IOptions<LocalStorageSettings> config, ILogger<LocalMusicService> logger)
+        public LocalMusicService(IOptions<LocalStorageSettings> config, ILogger<LocalMusicService> logger, MetaDataHandler metaHandler)
         {
             _config = config.Value;
             _logger = logger;
+            _metaHandler = metaHandler;
         }
 
-        public async Task<IEnumerable<string>?> GetMusicTitles()
+        public async Task<IEnumerable<MusicTrack>?> GetMusicTracks()
         {
             try
             {
-                if (!Directory.Exists(_config.FilePath))
+                if (!Directory.Exists(_config.FolderPath))
                 {
-                    throw new ArgumentException($"The filepath does not exist! ({_config.FilePath})");
+                    throw new ArgumentException($"The folder path does not exist! ({_config.FolderPath})");
                 }
 
-                var files = Directory.GetFiles(_config.FilePath);
+                var filePaths = Directory.GetFiles(_config.FolderPath);
 
-                if (files == null || files.Length == 0)
+                if (filePaths == null || filePaths.Length == 0)
                 {
-                    throw new ArgumentException($"There are no files on the configred path! ({_config.FilePath})");
+                    throw new ArgumentException($"There are no files on the configred path! ({_config.FolderPath})");
                 }
 
-                var relevantFiles = files.Where(file => _config.Extensions.Contains(Path.GetExtension(file)))
-                    .Select(Path.GetFileNameWithoutExtension);
+                var relevantFilePaths = filePaths.Where(file => _config.Extensions.Contains(Path.GetExtension(file)));
 
-                if (!relevantFiles.Any())
+                if (!relevantFilePaths.Any())
                 {
-                    throw new ArgumentException($"There were no relevant files on the configred path! ({_config.FilePath})");
+                    throw new ArgumentException($"There were no relevant files on the configred path! ({_config.FolderPath})");
                 }
 
-                return relevantFiles;
+                return relevantFilePaths.Select(path => _metaHandler.GetMusicTrack(path));
             }
             catch (Exception ex)
             {

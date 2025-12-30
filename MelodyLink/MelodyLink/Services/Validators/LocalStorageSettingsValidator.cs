@@ -8,7 +8,7 @@ namespace MelodyLink.Services.Validators
         {
             var requiredSingleFields = new List<string>()
             {
-                nameof(config.FilePath)
+                nameof(config.FolderPath)
             };
 
             CheckSingleFields<LocalStorageSettings>(requiredSingleFields, config);

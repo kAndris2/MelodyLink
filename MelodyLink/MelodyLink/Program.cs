@@ -28,6 +28,7 @@ try
 
             services.AddTransient<Application>();
             services.AddTransient<LocalMusicService>();
+            services.AddTransient<MetaDataHandler>();
             services.AddTransient<SpotifyService>();
             services.AddTransient<SpotifyConnector>();
             services.AddTransient<SpotifyApiService>();

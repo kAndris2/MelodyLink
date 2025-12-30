@@ -31,6 +31,7 @@
     <PackageReference Include="NLog.Extensions.Logging" Version="6.1.0" />
     <PackageReference Include="SpotifyAPI.Web" Version="7.2.1" />
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.2.1" />
+    <PackageReference Include="TagLibSharp" Version="2.3.0" />
   </ItemGroup>
 
 </Project>

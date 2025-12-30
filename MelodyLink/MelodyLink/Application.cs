@@ -27,11 +27,11 @@ namespace MelodyLink
             _logger.LogInformation($"The application is starting in mode: {_config.Source} to {_config.Target}");
 
             var sourceFlowService = GetFlowService(_config.Source);
-            var musicTitles = await sourceFlowService.GetMusicTitles();
+            var musicTracks = await sourceFlowService.GetMusicTracks();
 
-            if (musicTitles == null) return;
+            if (musicTracks == null) return;
 
-            _logger.LogInformation($"Found {musicTitles.Count()} track(s) on the source.");
+            _logger.LogInformation($"Found {musicTracks.Count()} track(s) on the source.");
         }
 
         private IFlowService GetFlowService(Flow flow)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using MelodyLink.Interfaces;
+using MelodyLink.Models;
 
 namespace MelodyLink.Services.Spotify
 {
@@ -14,7 +15,7 @@ namespace MelodyLink.Services.Spotify
             _logger = logger;
         }
 
-        public async Task<IEnumerable<string>?> GetMusicTitles()
+        public async Task<IEnumerable<MusicTrack>?> GetMusicTracks()
         {
             try
             {
@@ -27,7 +28,7 @@ namespace MelodyLink.Services.Spotify
 
                 return [.. playlistTracks.Values
                     .SelectMany(tracks => tracks)
-                    .Select(track => track.FullName)];
+                    .Select(track => new MusicTrack(track.Title, track.Artists))];
             }
             catch (Exception ex)
             {
