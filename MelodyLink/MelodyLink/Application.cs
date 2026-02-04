@@ -31,12 +31,12 @@ namespace MelodyLink
                 var sourceFlowService = GetFlowService(_config.Source);
                 var musicTracks = await sourceFlowService.GetMusicTracks();
 
-                _logger.LogInformation($"Found {musicTracks.Count()} track(s) on the source.");
+                _logger.LogInformation($"Found {musicTracks.Count()} track(s) on the {_config.Source}.");
 
                 var targetFlowService = GetFlowService(_config.Target);
                 await targetFlowService.SyncMusicTracks(musicTracks);
 
-                _logger.LogInformation("The music track(s) have been successfully syncronized to target!");
+                _logger.LogInformation($"The music track(s) have been successfully syncronized to {_config.Target}!");
             }
             catch (Exception ex)
             {
