@@ -4,6 +4,7 @@ namespace MelodyLink.Interfaces
 {
     public interface IFlowService
     {
-        Task<IEnumerable<MusicTrack>?> GetMusicTracks();
+        Task<IEnumerable<MusicTrack>> GetMusicTracks();
+        Task SyncMusicTracks(IEnumerable<MusicTrack> musicTracks);
     }
 }

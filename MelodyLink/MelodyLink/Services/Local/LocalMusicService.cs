@@ -18,7 +18,7 @@ namespace MelodyLink.Services.Local
             _metaHandler = metaHandler;
         }
 
-        public async Task<IEnumerable<MusicTrack>?> GetMusicTracks()
+        public async Task<IEnumerable<MusicTrack>> GetMusicTracks()
         {
             try
             {
@@ -45,8 +45,34 @@ namespace MelodyLink.Services.Local
             }
             catch (Exception ex)
             {
-                _logger.LogError($"An error occurred while trying to get local files! Ex.: {ex.Message}");
-                return null;
+                throw new Exception($"An error occurred while trying to get local files! Ex.: {ex.Message}");
+            }
+        }
+
+        public async Task SyncMusicTracks(IEnumerable<MusicTrack> musicTracks)
+        {
+            try
+            {
+                if (!Directory.Exists(_config.FolderPath))
+                {
+                    throw new ArgumentException($"The folder path does not exist! ({_config.FolderPath})");
+                }
+
+                var date = DateTime.Now.ToString("yyyy_MM_dd_-_HH_mm_ss");
+                var fileName = $"tracks_({date}).txt";
+                var filePath = Path.Combine(_config.FolderPath, fileName);
+
+                using (var writer = new StreamWriter(filePath))
+                {
+                    foreach (var track in musicTracks)
+                    {
+                        await writer.WriteLineAsync(track.FullName);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred during synchronization! Ex.: {ex.Message}");
             }
         }
     }

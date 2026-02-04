@@ -15,7 +15,7 @@ namespace MelodyLink.Services.Spotify
             _logger = logger;
         }
 
-        public async Task<IEnumerable<MusicTrack>?> GetMusicTracks()
+        public async Task<IEnumerable<MusicTrack>> GetMusicTracks()
         {
             try
             {
@@ -32,9 +32,13 @@ namespace MelodyLink.Services.Spotify
             }
             catch (Exception ex)
             {
-                _logger.LogError($"An error occurred while trying to get playlists/tracks from Spotify! Ex.: {ex.Message}");
-                return null;
+                throw new Exception($"An error occurred while trying to get playlists/tracks from Spotify! Ex.: {ex.Message}");
             }
+        }
+
+        public Task SyncMusicTracks(IEnumerable<MusicTrack> musicTracks)
+        {
+            throw new NotImplementedException();
         }
     }
 }

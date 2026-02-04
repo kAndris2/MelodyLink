@@ -24,14 +24,24 @@ namespace MelodyLink
 
         public async Task Run()
         {
-            _logger.LogInformation($"The application is starting in mode: {_config.Source} to {_config.Target}");
+            try
+            {
+                _logger.LogInformation($"The application is starting in mode: {_config.Source} to {_config.Target}");
 
-            var sourceFlowService = GetFlowService(_config.Source);
-            var musicTracks = await sourceFlowService.GetMusicTracks();
+                var sourceFlowService = GetFlowService(_config.Source);
+                var musicTracks = await sourceFlowService.GetMusicTracks();
 
-            if (musicTracks == null) return;
+                _logger.LogInformation($"Found {musicTracks.Count()} track(s) on the source.");
 
-            _logger.LogInformation($"Found {musicTracks.Count()} track(s) on the source.");
+                var targetFlowService = GetFlowService(_config.Target);
+                await targetFlowService.SyncMusicTracks(musicTracks);
+
+                _logger.LogInformation("The music track(s) have been successfully syncronized to target!");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"The process has stopped because an exception! Ex.: {ex.Message}");
+            }
         }
 
         private IFlowService GetFlowService(Flow flow)
