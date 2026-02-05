@@ -40,7 +40,7 @@ namespace MelodyLink
             }
             catch (Exception ex)
             {
-                _logger.LogError($"The process has stopped because an exception! Ex.: {ex.Message}");
+                _logger.LogError($"The process has stopped because of an exception! Ex.: {ex.Message}");
             }
         }
 
